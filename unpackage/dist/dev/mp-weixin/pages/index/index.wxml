@@ -1,0 +1,1 @@
+<view class="content"><view class="text-area"><u-button bind:click="__e" vue-id="8dd740cc-1" data-event-opts="{{[['^click',[['onClick']]]]}}" bind:__l="__l" vue-slots="{{['default']}}">点击获取信息</u-button></view></view>

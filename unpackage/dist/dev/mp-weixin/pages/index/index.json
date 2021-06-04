@@ -1,6 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "u-button": "/components/uview-ui/components/u-button/u-button"
-  }
-}

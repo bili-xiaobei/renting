@@ -1,14 +1,40 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/home/home",
+    "pages/addRoom/addRoom",
+    "pages/my/my"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "tabBar": {
+    "color": "#bfbfbf",
+    "selectedColor": "#f0e51d",
+    "fontSize": "22rpx",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/home.png",
+        "selectedIconPath": "static/home_.png"
+      },
+      {
+        "pagePath": "pages/addRoom/addRoom",
+        "iconPath": "static/add.png",
+        "selectedIconPath": "static/add_.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/my.png",
+        "selectedIconPath": "static/my_.png"
+      }
+    ]
+  },
+  "usingComponents": {}
 }

@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-form": "/components/uview-ui/components/u-form/u-form",
+    "u-form-item": "/components/uview-ui/components/u-form-item/u-form-item",
+    "u-radio-group": "/components/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/components/uview-ui/components/u-radio/u-radio",
+    "u-input": "/components/uview-ui/components/u-input/u-input",
+    "u-checkbox-group": "/components/uview-ui/components/u-checkbox-group/u-checkbox-group",
+    "u-checkbox": "/components/uview-ui/components/u-checkbox/u-checkbox"
+  }
+}

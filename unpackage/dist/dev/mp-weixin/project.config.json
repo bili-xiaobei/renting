@@ -8,8 +8,8 @@
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "touristappid",
-  "projectname": "小北",
+  "appid": "wx4ce548325e04b946",
+  "projectname": "房源管理",
   "condition": {
     "search": {
       "current": -1,

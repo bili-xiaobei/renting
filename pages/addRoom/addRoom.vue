@@ -1,171 +1,328 @@
 <template>
-	<view class="collapse">
-		<u-form :model="ajax_params" ref="u_ajax_params">
-			<u-form-item label="地址" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-radio-group v-model="ajax_params.address">
-					<u-radio v-for="(item, index) in param_list.type_arr" :key="item.type_arr" :name="item.type">
-						{{ item.type }}
-					</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="详细地址" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-input v-model="ajax_params.detail_addr" />
-			</u-form-item>
-			<u-form-item label="租金 元/月" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}"
-				border-bottom>
-				<u-input v-model="ajax_params.price" />
-			</u-form-item>
-			<u-form-item label="面积 /m2" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}"
-				border-bottom>
-				<u-input v-model="ajax_params.size" />
-			</u-form-item>
-			<u-form-item label="居室" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-radio-group v-model="ajax_params.room_num">
-					<u-radio v-for="(item, index) in param_list.room_num_arr" :key="item.room_num_arr"
-						:name="item.room_num">
-						{{ item.room_num }}
-					</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="付款方式" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-radio-group v-model="ajax_params.payment">
-					<u-radio v-for="(item, index) in param_list.payment_arr" :key="item.payment_arr"
-						:name="item.payment">
-						{{ item.payment }}
-					</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="起租时长" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-radio-group v-model="ajax_params.start_sent">
-					<u-radio v-for="(item, index) in param_list.start_sent_arr" :key="item.start_sent_arr"
-						:name="item.start_sent">
-						{{ item.start_sent }}
-					</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="配置" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-checkbox-group>
-					<u-checkbox v-model="item.checked" v-for="(item, index) in param_list.room_dispose_arr"
-						:key="item.room_dispose_arr" :name="item.dispose" @change="change('dispose')">
-						{{ item.dispose }}
-					</u-checkbox>
-				</u-checkbox-group>
-			</u-form-item>
-			<u-form-item label="朝向" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-				<u-radio-group v-model="ajax_params.direction">
-					<u-radio v-for="(item, index) in param_list.direction_arr" :key="item.direction_arr"
-						:name="item.direction">
-						{{ item.direction }}
-					</u-radio>
-				</u-radio-group>
-			</u-form-item>
-			<u-form-item label="上传图片" label-position="top" :label-style="{'font-size': '32rpx','font-weight':'bold'}">
-
-			</u-form-item>
-		</u-form>
-	</view>
+  <view class="add_room">
+    <view
+      class="header"
+      @touchmove="handleTouch"
+      @touchstart="handleTouch"
+    >发布房源</view>
+    <view
+      class="content"
+      @touchmove="handleTouch"
+      @touchstart="handleTouch"
+    >
+      <view class="item type">
+        <view class="left">房源类型</view>
+        <view
+          class="right"
+          @click="choose('type')"
+        >
+          {{roomInfo.type ? roomInfo.type : '选择'}}<u-icon
+            v-if="!roomInfo.type"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item address">
+        <view class="left">位置</view>
+        <view
+          class="right"
+          @click="choose('address')"
+        >
+          {{roomInfo.address ? roomInfo.address : '选择'}}<u-icon
+            v-if="!roomInfo.address"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item detail_addr">
+        <view class="left">详细地址</view>
+        <view class="right">
+          <input
+            type="text"
+            placeholder="点击输入"
+          />
+        </view>
+      </view>
+      <view class="item size">
+        <view class="left">面积</view>
+        <view class="right">
+          <input
+            maxlength="6"
+            type="text"
+            placeholder="点击输入"
+          >m<view class="sup">2</view>
+        </view>
+      </view>
+      <view class="item price">
+        <view class="left">租金</view>
+        <view class="right">
+          <input
+            maxlength="6"
+            type="text"
+            placeholder="点击输入"
+          />/月
+        </view>
+      </view>
+      <view class="item dispose">
+        <view class="left">配置</view>
+        <view
+          class="right"
+          @click="choose('dispose')"
+        >
+          {{roomInfo.dispose ? roomInfo.dispose : '选择'}}<u-icon
+            v-if="!roomInfo.dispose"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item payment">
+        <view class="left">付款方式</view>
+        <view
+          class="right"
+          @click="choose('payment')"
+        >
+          {{roomInfo.payment ? roomInfo.payment : '选择'}}<u-icon
+            v-if="!roomInfo.payment"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item start_sent">
+        <view class="left">起租时长</view>
+        <view
+          class="right"
+          @click="choose('start_sent')"
+        >
+          {{roomInfo.start_sent ? roomInfo.start_sent : '选择'}}<u-icon
+            v-if="!roomInfo.start_sent"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item room_num">
+        <view class="left">居室</view>
+        <view
+          class="right"
+          @click="choose('room_num')"
+        >
+          {{roomInfo.room_num ? roomInfo.room_num : '选择'}}<u-icon
+            v-if="!roomInfo.room_num"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item direction">
+        <view class="left">朝向</view>
+        <view
+          class="right"
+          @click="choose('direction')"
+        >
+          {{roomInfo.direction ? roomInfo.direction : '选择'}}<u-icon
+            v-if="!roomInfo.direction"
+            name="arrow-right-double"
+          ></u-icon>
+        </view>
+      </view>
+      <view class="item images">
+        <view class="left">图片上传</view>
+        <view class="right">
+          请上传
+        </view>
+      </view>
+      <view class="item images_upload">
+        +
+      </view>
+    </view>
+    <view
+      class="popup"
+      v-if="isShow"
+    >
+      <input
+        maxlength="8"
+        type="text"
+        placeholder="点击输入"
+      />
+      <view
+        v-for="item in popup_data"
+        class="value"
+        @click="clickValue(item.value)"
+      >
+        {{item.value}}
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				param_list: {},
-				ajax_params: {
-					address: '',
-					type: '',
-					detail_addr: '',
-					price: '',
-					size: '',
-					room_num: '',
-					payment: '',
-					start_sent: '',
-					room_dispose: [],
-					direction: '',
-					images: []
-				},
-			}
-		},
-		onLoad() {
-			this.getUserData()
-		},
-		methods: {
-			getUserData() {
-				uniCloud.callFunction({
-					name: 'getUserData',
-					data: {
-						name: '小北'
-					},
-					success: (res) => {
-						if (res.result.res.data.length == 0) {
-							return uni.showToast({
-								icon: "none",
-								title: "暂无数据"
-							})
-						}
-						this.param_list = res.result.res.data[0].publish_parameters
-					},
-					fail(err) {
-						uni.showToast("请求失败")
-					}
-				})
-			},
-			popupOpen() {
-				console.log('open')
-			},
-			setting() {
-				console.log('setting')
-			},
-			change(e) {
-				console.log(this.ajax_params)
-			}
-		}
-	}
-	/*
-		发布房源的参数
-		"address": "",  房源位置
-		"detail_addr": "",  房源楼层及房间号
-		"type": "",		房源的类型
-		"price": "",  租金
-		"size": "",   面积
-		"payment": "", 付款方式
-		"start_sent": "", 起租
-		"dispose": "",[]  房间配置
-		"room_num": "",   居室
-		"direction": "",  房间朝向
-		"images": "",   房屋图片
-	
-	publish_parameters
-	*/
+  export default {
+    name: '',
+    data() {
+      return {
+        roomInfo: {
+          type: '',
+          address: '',
+          detail_addr: '',
+          size: '',
+          price: '',
+          dispose: '',
+          payment: '',
+          start_sent: '',
+          room_num: '',
+          direction: '',
+          images: '',
+        },
+        param_list: {},
+        popup_data: [],
+        isShow: false,
+        choose_type: ''
+      };
+    },
+    components: {},
+    computed: {},
+    watch: {},
+    methods: {
+      choose(type) {
+        // console.log(type)
+        this.popup_data = this.param_list[type + '_arr']
+        this.isShow = true;
+        // console.log(this.param_list)
+        // console.log(this.popup_data)
+        this.choose_type = type
+      },
+      clickValue(val) {
+        // console.log(val)
+        if (this.choose_type == 'type') {
+          this.roomInfo.type = val
+        }
+        if (this.choose_type == 'address') {
+          this.roomInfo.address = val
+        }
+        if (this.choose_type == 'dispose') {
+          this.roomInfo.dispose = val
+        }
+        if (this.choose_type == 'payment') {
+          this.roomInfo.payment = val
+        }
+        if (this.choose_type == 'start_sent') {
+          this.roomInfo.start_sent = val
+        }
+        if (this.choose_type == 'room_num') {
+          this.roomInfo.room_num = val
+        }
+        if (this.choose_type == 'direction') {
+          this.roomInfo.direction = val
+        }
+        this.isShow = false
+      },
+      handleTouch() {
+        this.isShow = false
+      },
+      // 通过云函数获取所有信息
+      getUserData() {
+        uniCloud.callFunction({
+          name: 'getUserData',
+          data: {
+            name: '小北'
+          },
+          success: (res) => {
+            if (res.result.res.data.length == 0) {
+              return uni.showToast({
+                icon: "none",
+                title: "暂无数据"
+              })
+            }
+            this.param_list = res.result.res.data[0].publish_parameters
+          },
+          fail(err) {
+            uni.showToast("请求失败")
+          }
+        })
+      },
+    },
+    created() {
+      this.getUserData()
+    },
+    mounted() { },
+    beforeCreate() { },
+    beforeMount() { },
+    beforeUpdate() { },
+    updated() { },
+    beforeDestroy() { },
+    destroyed() { },
+    activated() { },
+  }
 </script>
-
-<style lang="scss">
-	.collapse {
-		padding: 40rpx;
-
-		&>view {
-			.top {
-				font-size: 36rpx;
-				font-weight: bold;
-				display: flex;
-				align-items: center;
-			}
-
-			.bottom {
-				display: flex;
-
-				.item {
-					display: flex;
-					align-items: center;
-
-					._circle {
-						width: 15rpx;
-						height: 15rpx;
-						border-radius: 50%;
-						background-color: #2B85E4;
-					}
-				}
-			}
-		}
-	}
+<style lang='scss' scoped>
+  .add_room {
+    position: relative;
+    .header {
+      width: 100%;
+      height: 80rpx;
+      display: flex;
+      justify-content: center;
+      background-color: $bgColor;
+      align-items: flex-end;
+      padding-bottom: 20rpx;
+      font-size: 34rpx;
+      font-weight: bold;
+    }
+    .content {
+      padding: 30rpx 40rpx;
+      .item:not(:last-child) {
+        height: 70rpx;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10rpx;
+        border-bottom: 1px solid rgb(243, 243, 243);
+        .left {
+          font-size: 28rpx;
+        }
+        .right {
+          display: flex;
+          align-items: center;
+          font-size: 24rpx;
+          color: #666;
+          input {
+            font-size: 24rpx;
+            text-align: right;
+            color: $color;
+            margin-right: 10rpx;
+          }
+          .sup {
+            vertical-align: super !important;
+          }
+        }
+      }
+    }
+    .popup {
+      width: 220rpx;
+      // height: 200rpx;
+      max-height: 800rpx;
+      background-color: rgb(226, 226, 226);
+      position: absolute;
+      top: 55%;
+      right: 0;
+      transform: translateY(-50%);
+      border-radius: 20rpx 0 0 20rpx;
+      padding: 25rpx 0;
+      input {
+        width: 100%;
+        text-align: center;
+        font-size: 24rpx;
+        height: 70rpx;
+        line-height: 70rpx;
+        background-color: rgb(240, 240, 240);
+      }
+      .value {
+        width: 100%;
+        text-align: center;
+        font-size: 24rpx;
+        height: 70rpx;
+        line-height: 70rpx;
+        font-weight: bold;
+        border-bottom: 1px double rgb(231, 231, 231);
+      }
+    }
+  }
 </style>

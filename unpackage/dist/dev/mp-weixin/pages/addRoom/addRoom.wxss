@@ -24,36 +24,4 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.collapse {
-  padding: 40rpx;
-}
-.collapse > view .top {
-  font-size: 36rpx;
-  font-weight: bold;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-}
-.collapse > view .bottom {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-}
-.collapse > view .bottom .item {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-}
-.collapse > view .bottom .item ._circle {
-  width: 15rpx;
-  height: 15rpx;
-  border-radius: 50%;
-  background-color: #2B85E4;
-}
 
